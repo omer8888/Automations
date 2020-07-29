@@ -1,0 +1,14 @@
+  def verify_payment_methods(country)
+    processor = self.is_processor_adyen? ? 'ADYEN' : 'BLS'
+    device = (MOBILE_DEVICES.include? DEVICE) ? 'mobile' : 'desktop'
+    expected_number_of_payment_methods = (eval("#{processor}_PAYMENT_METHODS")[country][device]).size
+    actual_number_of_payment_methods=0
+    #counting and compering the actual payment methods in the page
+    actual_number_of_payment_methods = eval("self.#{device}_payment_methods_container_element.labels.count")
+    assert_equal expected_number_of_payment_methods, actual_number_of_payment_methods, "expected number payment methods #{expected_number_of_payment_methods} actual number of payment methods: #{actual_number_of_payment_methods}"
+
+    #verify expected payment methods exists
+    eval("#{processor}_PAYMENT_METHODS")[country][device].each do |method|
+      assert(eval("self.payment_method_#{method}_element.check_exists"), "Payment method #{method} is missing")
+    end
+  end
