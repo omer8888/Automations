@@ -1,3 +1,6 @@
+  BLS_PAYMENT_METHODS = {'usa' => {'mobile' => ['cc', 'bls_paypal'], 'desktop' => ['cc', 'bls_paypal', 'moneybookers', 'wire', 'banktransfer']}}
+  ADYEN_PAYMENT_METHODS = {'usa' => {'mobile' => ['cc', 'adyen_paypal'], 'desktop' => ['cc', 'adyen_paypal']}}
+  
   def verify_payment_methods(country)
     processor = self.is_processor_adyen? ? 'ADYEN' : 'BLS'
     device = (MOBILE_DEVICES.include? DEVICE) ? 'mobile' : 'desktop'
